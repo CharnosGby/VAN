@@ -1,0 +1,13 @@
+<template>
+    <div>
+        picMF
+    </div>
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style scoped>
+
+</style>
