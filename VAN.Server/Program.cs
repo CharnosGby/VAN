@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using VAN.Server.Service;
+using VAN.WebCore.Swagger;
 using VueASPNet.Server.Db;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
    .AddNegotiate();
@@ -16,35 +18,41 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddDbContext<BaseContext>(options =>
     options.UseSqlServer("Data Source=localhost;Database=workdatabase;User Id=root;Password=123456;Encrypt=False;"));
+builder.Services.AddScoped<ITestService, TestService>();
 
-builder.Services.AddSwaggerGen(c =>
+new SwaggerInit().AddSwaggerExt(builder.Services);
+
+
+builder.Services.AddCors(options =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:5173")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials(); // ÔÊÐíÐ¯´øÆ¾Ö¤
+        });
 });
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = string.Empty;
-});
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    new SwaggerInit().UseSwaggerExt(app);
 }
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseStaticFiles();
+app.UseDefaultFiles();
 
 app.UseRouting();
+
+app.UseCors("AllowSpecificOrigin");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

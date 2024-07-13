@@ -30,9 +30,9 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     }
 }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
+/*const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
     env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7060';
-
+    */
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [plugin()],
@@ -42,13 +42,19 @@ export default defineConfig({
         }
     },
     server: {
+        port: 5173,
         proxy: {
-            '^/weatherforecast': {
-                target,
-                secure: false
+            '/api': {
+                target: 'http://localhost:8081',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            },
+            '/Test': {
+                target: 'http://localhost:8081',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/Test/, '')
             }
         },
-        port: 5173,
         https: {
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
