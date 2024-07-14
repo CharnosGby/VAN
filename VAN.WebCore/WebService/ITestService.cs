@@ -6,7 +6,7 @@ namespace VAN.WebCore.WebService
 {
     public interface ITestService
     {
-        Task<List<UserModel>> GetAllUsers(SQLServerInit serverInit, long id); // 修正方法签名，添加缺少的参数类型和名称
+        Task<List<User>> GetAllUsers(SQLServerInit serverInit, long id); // 修正方法签名，添加缺少的参数类型和名称
     }
 
     public class TestService : ITestService
@@ -18,10 +18,10 @@ namespace VAN.WebCore.WebService
             _serverInit = serverInit;
         }
 
-        public async Task<List<UserModel>> GetAllUsers(SQLServerInit serverInit, long id)
+        public async Task<List<User>> GetAllUsers(SQLServerInit serverInit, long id)
         {
             string sql = $"SELECT * FROM [work].[user] WHERE id={id}"; // 使用参数化查询，防止 SQL 注入
-            return await serverInit.UserDbContent.FromSqlRaw(sql).ToListAsync();
+            return await serverInit.Users.FromSqlRaw(sql).ToListAsync();
         }
     }
 }

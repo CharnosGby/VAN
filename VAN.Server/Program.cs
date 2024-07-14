@@ -16,9 +16,10 @@ builder.Services.AddAuthorization(options =>
 });
 
 // Init
-
-builder.Services.AddDbContext<SQLServerInit>(options =>
-    options.UseSqlServer("Data Source=localhost;Database=workdatabase;User Id=root;Password=123456;Encrypt=False;"));
+builder.Services.AddDbContext<DbContext, SQLServerInit>(builderOptions =>
+{
+    builderOptions.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 new ServiceInit().AddService(builder.Services);
 new SwaggerInit().AddSwaggerExt(builder.Services);
 new WebCorsInit().AddCors(builder.Services);

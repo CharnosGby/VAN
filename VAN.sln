@@ -12,7 +12,9 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "van.client", "van.client\va
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VAN.WebCore", "VAN.WebCore\VAN.WebCore.csproj", "{0A3E24A1-D40A-46FC-8BDC-255E154F5482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAN.SQLServerCore", "VAN.SQLServerCore\VAN.SQLServerCore.csproj", "{663A2E5C-9973-4103-B4ED-8978EBF236A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VAN.SQLServerCore", "VAN.SQLServerCore\VAN.SQLServerCore.csproj", "{663A2E5C-9973-4103-B4ED-8978EBF236A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{95C9B824-92A5-463C-876E-3B4C69E2923C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C9B824-92A5-463C-876E-3B4C69E2923C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C9B824-92A5-463C-876E-3B4C69E2923C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C9B824-92A5-463C-876E-3B4C69E2923C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C9B824-92A5-463C-876E-3B4C69E2923C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

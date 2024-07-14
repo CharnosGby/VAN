@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VAN.SQLServerCore.SQLServer.Models
 {
-    public class UserModel
+    public class User
     {
         [Key]
         public required long Id { get; set; }

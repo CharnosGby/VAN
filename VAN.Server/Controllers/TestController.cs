@@ -26,7 +26,7 @@ namespace VAN.Server.Controllers
         public async Task<Result<object>> TestGet()
         {
             var data = SpawnTestObject;
-            data.Add(await _SQLServerInit.UserDbContent.ToListAsync());
+            data.Add(await _SQLServerInit.Users.ToListAsync());
             return new Result<object>((int)Result<object>.CM.SUCCESS_200, "Success", data);
         }
 
@@ -37,7 +37,7 @@ namespace VAN.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
         public async Task<Result<object>> TestDoSql(long id)
         {
-            List<UserModel> data = await _testService.GetAllUsers(_SQLServerInit, id); // 传递 id 参数给 GetAllUsers 方法
+            List<User> data = await _testService.GetAllUsers(_SQLServerInit, id); // 传递 id 参数给 GetAllUsers 方法
             if (data.IsNullOrEmpty())
             {
                 return new Result<object>((int)Result<object>.CM.ERROR_404, "Data not found", "");
