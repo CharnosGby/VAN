@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace VueASPNet.Server.Models
+namespace VAN.SQLServerCore.SQLServer.Models
 {
     public class UserModel
     {

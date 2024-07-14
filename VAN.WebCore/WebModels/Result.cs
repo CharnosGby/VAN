@@ -1,4 +1,4 @@
-﻿namespace VAN.Server.Models
+﻿namespace VAN.WebCore.WebModels
 {
     public class Result<T>
     {

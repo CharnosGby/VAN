@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace VAN.WebCore.Swagger
+namespace VAN.WebCore.Init
 {
     public class SwaggerInit
     {

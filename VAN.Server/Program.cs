@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
-using VAN.Server.Service;
-using VAN.WebCore.Swagger;
-using VueASPNet.Server.Db;
+using VAN.SQLServerCore.SQLServer;
+using VAN.WebCore.Init;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -16,24 +15,13 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 
-builder.Services.AddDbContext<BaseContext>(options =>
+// Init
+
+builder.Services.AddDbContext<SQLServerInit>(options =>
     options.UseSqlServer("Data Source=localhost;Database=workdatabase;User Id=root;Password=123456;Encrypt=False;"));
-builder.Services.AddScoped<ITestService, TestService>();
-
+new ServiceInit().AddService(builder.Services);
 new SwaggerInit().AddSwaggerExt(builder.Services);
-
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin",
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:5173")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials(); // ‘ –Ì–Ø¥¯∆æ÷§
-        });
-});
+new WebCorsInit().AddCors(builder.Services);
 
 var app = builder.Build();
 

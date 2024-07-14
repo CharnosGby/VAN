@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
-using VueASPNet.Server.Db;
-using VueASPNet.Server.Models;
+using VAN.SQLServerCore.SQLServer;
+using VAN.SQLServerCore.SQLServer.Models;
 
-namespace VueASPNet.Server.Controllers
+namespace VAN.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController(ILogger<UserController> logger, BaseContext baseContext) : Controller
+    public class UserController(ILogger<UserController> logger, SQLServerInit serverInit) : Controller
     {
         private readonly ILogger<UserController> _logger = logger;
-        private readonly BaseContext _baseContext = baseContext;
+        private readonly SQLServerInit _serverInit = serverInit;
 
         [HttpGet("GetUsers")]
         [SwaggerOperation(Summary = "Get Users", Description = "获取全部用户数据")]
@@ -19,7 +19,7 @@ namespace VueASPNet.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _baseContext.UserDbContent.ToListAsync());
+            return Ok(await _serverInit.UserDbContent.ToListAsync());
         }
 
         [HttpPost("AddUser")]
@@ -28,8 +28,8 @@ namespace VueASPNet.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
         public async Task<ActionResult<UserModel>> Add(UserModel user)
         {
-            await _baseContext.AddAsync(user);
-            await _baseContext.SaveChangesAsync();
+            await _serverInit.AddAsync(user);
+            await _serverInit.SaveChangesAsync();
 
             return CreatedAtAction("Get", new { id = user.Id }, user);
         }
@@ -40,14 +40,14 @@ namespace VueASPNet.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
         public async Task<IActionResult> Update(UserModel user)
         {
-            var u = await _baseContext.UserDbContent.FindAsync(user.Id);
+            var u = await _serverInit.UserDbContent.FindAsync(user.Id);
             if (u == null)
             {
                 return NotFound();
             }
-            var entry = _baseContext.Entry(entity: user);
+            var entry = _serverInit.Entry(entity: user);
             entry.State = EntityState.Modified;
-            await _baseContext.SaveChangesAsync();
+            await _serverInit.SaveChangesAsync();
 
             return Ok(user);
         }
@@ -58,13 +58,13 @@ namespace VueASPNet.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
         public async Task<IActionResult> Delete(long id)
         {
-            var user = await _baseContext.UserDbContent.FindAsync(id);
+            var user = await _serverInit.UserDbContent.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
-            _baseContext.UserDbContent.Remove(user);
-            await _baseContext.SaveChangesAsync();
+            _serverInit.UserDbContent.Remove(user);
+            await _serverInit.SaveChangesAsync();
             return Ok(user);
         }
     }

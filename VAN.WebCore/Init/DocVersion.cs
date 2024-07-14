@@ -1,4 +1,4 @@
-﻿namespace VAN.WebCore.Swagger
+﻿namespace VAN.WebCore.Init
 {
     public enum DocVersion
     {

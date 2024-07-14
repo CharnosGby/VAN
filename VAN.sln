@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35103.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VAN.Server", "VAN.Server\VAN.Server.csproj", "{E94396B8-7198-413D-9124-ABDD485FDA11}"
+	ProjectSection(ProjectDependencies) = postProject
+		{663A2E5C-9973-4103-B4ED-8978EBF236A1} = {663A2E5C-9973-4103-B4ED-8978EBF236A1}
+	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "van.client", "van.client\van.client.esproj", "{58D077D0-C39E-4600-AD67-94C2A55EF5CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VAN.WebCore", "VAN.WebCore\VAN.WebCore.csproj", "{0A3E24A1-D40A-46FC-8BDC-255E154F5482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAN.SQLServerCore", "VAN.SQLServerCore\VAN.SQLServerCore.csproj", "{663A2E5C-9973-4103-B4ED-8978EBF236A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +34,10 @@ Global
 		{0A3E24A1-D40A-46FC-8BDC-255E154F5482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3E24A1-D40A-46FC-8BDC-255E154F5482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3E24A1-D40A-46FC-8BDC-255E154F5482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663A2E5C-9973-4103-B4ED-8978EBF236A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

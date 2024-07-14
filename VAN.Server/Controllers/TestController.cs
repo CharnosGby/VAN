@@ -3,20 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
-using VAN.Server.Models;
-using VAN.Server.Service;
-using VAN.WebCore.Swagger;
-using VueASPNet.Server.Db;
-using VueASPNet.Server.Models;
+using VAN.SQLServerCore.SQLServer;
+using VAN.SQLServerCore.SQLServer.Models;
+using VAN.WebCore.Init;
+using VAN.WebCore.WebModels;
+using VAN.WebCore.WebService;
 
 namespace VAN.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(DocVersion.V1))]
-    public class TestController(BaseContext baseContext, ITestService testService) : Controller
+    public class TestController(SQLServerInit serverInit, ITestService testService) : Controller
     {
-        private readonly BaseContext _baseContext = baseContext;
+        private readonly SQLServerInit _SQLServerInit = serverInit;
         private readonly ITestService _testService = testService;
 
         [HttpGet("TestGet")]
@@ -26,7 +26,7 @@ namespace VAN.Server.Controllers
         public async Task<Result<object>> TestGet()
         {
             var data = SpawnTestObject;
-            data.Add(await _baseContext.UserDbContent.ToListAsync());
+            data.Add(await _SQLServerInit.UserDbContent.ToListAsync());
             return new Result<object>((int)Result<object>.CM.SUCCESS_200, "Success", data);
         }
 
@@ -37,7 +37,7 @@ namespace VAN.Server.Controllers
         [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
         public async Task<Result<object>> TestDoSql(long id)
         {
-            List<UserModel> data = await _testService.GetAllUsers(_baseContext, id); // 传递 id 参数给 GetAllUsers 方法
+            List<UserModel> data = await _testService.GetAllUsers(_SQLServerInit, id); // 传递 id 参数给 GetAllUsers 方法
             if (data.IsNullOrEmpty())
             {
                 return new Result<object>((int)Result<object>.CM.ERROR_404, "Data not found", "");

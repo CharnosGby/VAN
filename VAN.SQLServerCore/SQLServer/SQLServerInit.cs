@@ -1,21 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using VueASPNet.Server.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VAN.SQLServerCore.SQLServer.Models;
 
-namespace VueASPNet.Server.Db
+namespace VAN.SQLServerCore.SQLServer
 {
-    public class BaseContext : DbContext
+    public class SQLServerInit(DbContextOptions options) : DbContext(options)
     {
-
         public DbSet<UserModel> UserDbContent { get; set; }
 
-        public BaseContext(DbContextOptions options) : base(options)
-        {
-
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>().ToTable("user", "work");
         }
-
     }
 }
