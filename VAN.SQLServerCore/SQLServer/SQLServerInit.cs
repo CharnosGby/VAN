@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using VAN.SQLServerCore.SQLServer.Models;
 
 namespace VAN.SQLServerCore.SQLServer
@@ -20,6 +19,7 @@ namespace VAN.SQLServerCore.SQLServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // 表结构的映射
             modelBuilder.Entity<User>().ToTable("user", "work")
                 .HasKey(u => u.Id);
         }
@@ -30,6 +30,5 @@ namespace VAN.SQLServerCore.SQLServer
                 optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
-
     }
 }

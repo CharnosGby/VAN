@@ -1,7 +1,13 @@
+using AOPInit;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using VAN.SQLServerCore.SQLServer;
 using VAN.WebCore.Init;
+using VAN.WebCore.WebService;
+using VAN.WebCore.WebService.WebServiceImpl;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -15,14 +21,41 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 
-// Init
+// ³õÊ¼»¯
+# region SqlServer ×¢²á
 builder.Services.AddDbContext<DbContext, SQLServerInit>(builderOptions =>
 {
     builderOptions.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-new ServiceInit().AddService(builder.Services);
+# endregion
+
+# region WebService ×¢²á
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+
+    # region Service ×¢²á
+    builder.RegisterType<TestServiceImpl>().As<ITestService>()
+    .EnableInterfaceInterceptors();
+    # endregion
+
+    # region AOP ×¢²á
+    builder.RegisterType<CustomLogInterceptor>();
+    # endregion
+});
+# endregion
+
+# region Swagger ×¢²á
 new SwaggerInit().AddSwaggerExt(builder.Services);
+# endregion
+
+# region WebCors ×¢²á
 new WebCorsInit().AddCors(builder.Services);
+# endregion
+
+# region Automapper ×¢²á
+builder.Services.AddAutoMapper(typeof(AutoMapInit));
+# endregion
 
 var app = builder.Build();
 

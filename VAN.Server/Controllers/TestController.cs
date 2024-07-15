@@ -23,11 +23,16 @@ namespace VAN.Server.Controllers
         [SwaggerOperation(Summary = "TestGet", Description = "测试数据")]
         [SwaggerResponse(statusCode: 200, type: typeof(Result<Dictionary<string, int>>), description: "结果")]
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
-        public async Task<Result<object>> TestGet()
+        public async Task<IActionResult> TestGet()
         {
             var data = SpawnTestObject;
             data.Add(await _SQLServerInit.Users.ToListAsync());
-            return new Result<object>((int)Result<object>.CM.SUCCESS_200, "Success", data);
+            return new JsonResult(new Result<object>()
+            {
+                Code = (int)Result<object>.CM.SUCCESS_200,
+                Message = "Success",
+                Data = data
+            });
         }
 
         [HttpGet("TestDoSql")]
@@ -35,23 +40,40 @@ namespace VAN.Server.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(Result<object>), description: "结果")]
         [SwaggerResponse(statusCode: 404, type: typeof(Result<object>), description: "Data not found")]
         [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
-        public async Task<Result<object>> TestDoSql(long id)
+        public async Task<IActionResult> TestDoSql(long id)
         {
-            List<User> data = await _testService.GetAllUsers(_SQLServerInit, id); // 传递 id 参数给 GetAllUsers 方法
+            if (id < 0) {
+                return new JsonResult(new Result<object>()
+                {
+                    Code = (int)Result<object>.CM.ERROR_500,
+                    Message = "id must >= 0",
+                    Data = null
+                });
+            }
+            List<User> data = await _testService.GetAllUsers(_SQLServerInit, id); 
             if (data.IsNullOrEmpty())
             {
-                return new Result<object>((int)Result<object>.CM.ERROR_404, "Data not found", "");
+                return new JsonResult(new Result<object>() { 
+                    Code = (int)Result<object>.CM.ERROR_404,
+                    Message = "Data not found",
+                    Data = null
+                });
             }
-            else { 
-                return new Result<object>((int)Result<object>.CM.SUCCESS_200, "Success",data); // 返回查询结果
+            else {
+                return new JsonResult(new Result<object>()
+                {
+                    Code = (int)Result<object>.CM.SUCCESS_200,
+                    Message = "Success",
+                    Data = data
+                });
             }
         }
 
-        private static List<Object> SpawnTestObject
+        private static List<object> SpawnTestObject
         {
             get
             {
-                List<Object> RsList = new();
+                List<object> RsList = new();
 
                 Dictionary<string, int> Rs = new()
                 {
@@ -63,9 +85,11 @@ namespace VAN.Server.Controllers
 
                 foreach (var item in Rs)
                 {
-                    Dictionary<string, string> t = new();
-                    t["key"] = item.Key;
-                    t["value"] = item.Value.ToString();
+                    Dictionary<string, string> t = new()
+                    {
+                        ["key"] = item.Key,
+                        ["value"] = item.Value.ToString()
+                    };
                     RsList.Add(t);
                 }
                 return RsList;

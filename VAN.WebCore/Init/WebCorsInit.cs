@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VAN.WebCore.Init
 {
@@ -19,7 +14,7 @@ namespace VAN.WebCore.Init
                         builder.WithOrigins("https://localhost:5173")
                                .AllowAnyHeader()
                                .AllowAnyMethod()
-                               .AllowCredentials(); // 允许携带凭证
+                               .AllowCredentials();
                     });
                 options.AddPolicy("AllowAnyOrigin",
                     builder =>
@@ -27,7 +22,7 @@ namespace VAN.WebCore.Init
                         builder.WithOrigins("https://localhost:5174")
                               .AllowAnyHeader()
                               .AllowAnyMethod()
-                              .AllowCredentials(); // 允许携带凭证
+                              .AllowCredentials();
                     });
             });
         }

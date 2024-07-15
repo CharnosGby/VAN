@@ -1,19 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using VAN.SQLServerCore.SQLServer.Models;
 using VAN.SQLServerCore.SQLServer;
-using VAN.SQLServerCore.SQLServer.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace VAN.WebCore.WebService
+namespace VAN.WebCore.WebService.WebServiceImpl
 {
-    public interface ITestService
-    {
-        Task<List<User>> GetAllUsers(SQLServerInit serverInit, long id); // 修正方法签名，添加缺少的参数类型和名称
-    }
-
-    public class TestService : ITestService
+    public class TestServiceImpl : ITestService
     {
         private readonly SQLServerInit _serverInit;
 
-        public TestService(SQLServerInit serverInit)
+        public TestServiceImpl(SQLServerInit serverInit)
         {
             _serverInit = serverInit;
         }
