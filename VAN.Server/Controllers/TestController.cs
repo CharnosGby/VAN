@@ -69,6 +69,33 @@ namespace VAN.Server.Controllers
             }
         }
 
+        [HttpGet("GetScore")]
+        [SwaggerOperation(Summary = "GetScore", Description = "GetScore")]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<object>), description: "结果")]
+        [SwaggerResponse(statusCode: 404, type: typeof(Result<object>), description: "Data not found")]
+        [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
+        public async Task<IActionResult> GetScore()
+        {
+            List<Score> data = await _testService.GetAllScores(_SQLServerInit);
+            if (data.IsNullOrEmpty())
+            {
+                return new JsonResult(new Result<object>()
+                {
+                    Code = (int)Result<object>.CM.ERROR_404,
+                    Message = "Data not found",
+                    Data = null
+                });
+            }
+            else
+            {
+                return new JsonResult(new Result<object>()
+                {
+                    Code = (int)Result<object>.CM.SUCCESS_200,
+                    Message = "Success",
+                    Data = data
+                });
+            }
+        }
         private static List<object> SpawnTestObject
         {
             get

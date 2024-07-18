@@ -9,7 +9,6 @@ namespace VAN.WebCore.WebService
     public interface ITestService
     {
         Task<List<User>> GetAllUsers(SQLServerInit serverInit, long id); // 修正方法签名，添加缺少的参数类型和名称
+        Task<List<Score>> GetAllScores(SQLServerInit serverInit);
     }
-
-    
 }

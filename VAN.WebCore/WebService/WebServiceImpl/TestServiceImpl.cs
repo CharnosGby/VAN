@@ -13,9 +13,25 @@ namespace VAN.WebCore.WebService.WebServiceImpl
             _serverInit = serverInit;
         }
 
+        public async Task<List<Score>> GetAllScores(SQLServerInit serverInit)
+        {
+            string sql = $"SELECT * FROM [work].[score] WHERE del=0";
+            List<Score> scores = await serverInit.Scores.FromSqlRaw(sql)
+                .Select(s => new Score
+                {
+                    ScoreId = s.ScoreId,
+                    StudentId = s.StudentId,
+                    DisciplineId = s.DisciplineId,
+                    Scores = s.Scores,
+                    Del = s.Del
+                })
+                .ToListAsync();
+            return scores;
+        }
+
         public async Task<List<User>> GetAllUsers(SQLServerInit serverInit, long id)
         {
-            string sql = $"SELECT * FROM [work].[user] WHERE id={id}"; // 使用参数化查询，防止 SQL 注入
+            string sql = $"SELECT * FROM [work].[user] WHERE id={id}";
             return await serverInit.Users.FromSqlRaw(sql).ToListAsync();
         }
     }

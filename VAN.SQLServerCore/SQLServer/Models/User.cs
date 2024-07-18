@@ -8,5 +8,8 @@ namespace VAN.SQLServerCore.SQLServer.Models
         public required long Id { get; set; }
         public required string Name { get; set; }
         public required string Password { get; set; }
+        public required int Permission { get; set; }
+        public required string UserAccount { get; set; }
+        public required int Del { get; set; }
     }
 }
