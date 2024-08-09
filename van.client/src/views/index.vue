@@ -1,56 +1,46 @@
 <template>
-    <div>
+    <div class="nav">
         <el-menu
             :default-active="'Home'"
             background-color="#545c64"
+            class="nav-menu"
             mode="horizontal"
             text-color="#fff"
-            active-text-color="#ffd04b"
-            @select="Select"
+            :ellipsis="false"
+            :router="true"
+            menu-trigger="click"
+            active-text-color="#4bffff"
         >
-            <el-menu-item index="Home">首页</el-menu-item>
-            <el-sub-menu index="pictures">
-                <template #title>图集</template>
-                <el-menu-item index="picQR">精品推荐</el-menu-item>
-                <el-menu-item index="picP">人气热门</el-menu-item>
-                <el-menu-item index="picMF">我的喜欢</el-menu-item>
-                <el-sub-menu index="Ss">
-                    <template #title>图片专题</template>
-                    <el-menu-item index="picSs1">原创自拍</el-menu-item>
-                    <el-menu-item index="picSs2">网红大咖</el-menu-item>
-                    <el-menu-item index="picSs3">美腿玉足</el-menu-item>
-                    <el-menu-item index="picSs4">成人动漫</el-menu-item>
-                </el-sub-menu>
+            <el-menu-item index="/index/Home">
+                <span>预科学生分流系统</span>
+            </el-menu-item>
+            <div style="flex: 1;"></div>
+            <el-sub-menu index="Personal">
+                <template #title>个人中心</template>
+                <el-menu-item index="/index/Personal/personalInfos">个人资料</el-menu-item>
+                <el-menu-item index="/index/Personal/personalScores">个人成绩</el-menu-item>
+                <el-menu-item index="/index/Personal/personalOrderTo">填报志愿</el-menu-item>
+                <el-menu-item index="/index/Personal/personalResult">填报结果</el-menu-item>
             </el-sub-menu>
-            <el-sub-menu index="videos">
-                <template #title>视频</template>
-                <el-menu-item index="videoQR">精品推荐</el-menu-item>
-                <el-menu-item index="videoP">人气热门</el-menu-item>
-                <el-menu-item index="videoMF">我的喜欢</el-menu-item>
-                <el-sub-menu index="Ss">
-                    <template #title>视频专题</template>
-                    <el-menu-item index="videoSs1">抖音风格</el-menu-item>
-                    <el-menu-item index="videoSs2">粉嫩处女</el-menu-item>
-                    <el-menu-item index="videoSs3">街拍街射</el-menu-item>
-                </el-sub-menu>
+            <el-sub-menu index="View">
+                <template #title>查看</template>
+                <el-menu-item index="/index/View/ViewCollege">各学院信息</el-menu-item>
+                <el-menu-item index="/index/View/ViewTeachers">各教师信息</el-menu-item>
+                <el-menu-item index="/index/View/ViewLike">收藏</el-menu-item>
             </el-sub-menu>
-            <el-menu-item index="Personal">个人中心</el-menu-item>
+            <el-menu-item index="/index/Exit">退出登录</el-menu-item>
         </el-menu>
-        <div>
-            <RouterView />
-        </div>
+    </div>
+    <div class="content">
+        <RouterView />
     </div>
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
-import { ref } from 'vue'
-const Select = (path: string,indexPath:string[]) => {
-    console.log(indexPath.join('/'));
-    router.push('/index/'+indexPath.join('/'))
-}
 </script>
 
 <style scoped>
-
+.content{
+    padding: 10px;
+}
 </style>

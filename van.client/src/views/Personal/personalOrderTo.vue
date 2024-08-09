@@ -1,6 +1,6 @@
 <template>
     <div>
-        videoP
+        <h1>个人志愿</h1>
     </div>
 </template>
 

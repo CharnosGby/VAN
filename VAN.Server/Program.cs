@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.DynamicProxy;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
+using Utils;
 using VAN.SQLServerCore.SQLServer;
 using VAN.WebCore.Init;
 using VAN.WebCore.WebService;
@@ -41,6 +42,10 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
     # region AOP зЂВс
     builder.RegisterType<CustomLogInterceptor>();
+    # endregion
+
+    # region Utils зЂВс
+    builder.RegisterType<MyUtils>();
     # endregion
 });
 # endregion

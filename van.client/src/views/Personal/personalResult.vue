@@ -1,6 +1,6 @@
 <template>
     <div>
-        videoSs3
+        <h1>志愿填报结果</h1>
     </div>
 </template>
 

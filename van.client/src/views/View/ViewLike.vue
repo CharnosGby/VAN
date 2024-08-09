@@ -1,6 +1,6 @@
 <template>
     <div>
-        videoSs2
+        <h1>个人收藏</h1>
     </div>
 </template>
 

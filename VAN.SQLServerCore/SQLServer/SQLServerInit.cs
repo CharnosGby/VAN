@@ -1,6 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VAN.SQLServerCore.SQLServer.Models;
 
 namespace VAN.SQLServerCore.SQLServer
@@ -47,12 +45,6 @@ namespace VAN.SQLServerCore.SQLServer
             {
                 optionsBuilder.UseSqlServer(ConnectionString);
             }
-        }
-
-        public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null)
-        {
-            await using var connection = new SqlConnection(ConnectionString);
-            return await connection.QueryAsync<T>(sql, parameters);
         }
     }
 }

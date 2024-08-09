@@ -1,6 +1,6 @@
 <template>
     <div>
-        picSs2
+        <h1>各学院信息</h1>
     </div>
 </template>
 

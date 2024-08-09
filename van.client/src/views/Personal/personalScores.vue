@@ -1,6 +1,6 @@
 <template>
     <div>
-        picSs1
+        <h1>个人成绩</h1>
     </div>
 </template>
 

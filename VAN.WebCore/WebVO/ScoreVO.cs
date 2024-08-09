@@ -1,6 +1,4 @@
-﻿using VAN.SQLServerCore.SQLServer;
-
-namespace VAN.WebCore.WebVO
+﻿namespace VAN.WebCore.WebVO
 {
     public class ScoreVO
     {
@@ -9,5 +7,15 @@ namespace VAN.WebCore.WebVO
         public double? Chinese { get; set; }
         public double? Math { get; set; }
         public double? English { get; set; }
+
+        public override string? ToString()
+        {
+            return $@"Sname: {Sname}
+Sno: {Sno}
+Chinese: {Chinese}
+Math: {Math}
+English: {English}
+";
+        }
     }
 }

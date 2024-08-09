@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AOPInit\AOPInit.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
     <ProjectReference Include="..\VAN.SQLServerCore\VAN.SQLServerCore.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        videoQR
+        <h1>各教师信息</h1>
     </div>
 </template>
 
