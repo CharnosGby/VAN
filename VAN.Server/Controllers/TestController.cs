@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Drawing.Printing;
 using Utils;
 using VAN.SQLServerCore.SQLServer;
 using VAN.SQLServerCore.SQLServer.Models;
@@ -32,26 +34,52 @@ namespace VAN.Server.Controllers
         }
 
         [HttpGet("TestGet")]
-        [SwaggerOperation(Summary = "TestGet", Description = "测试数据")]
-        [SwaggerResponse(statusCode: 200, type: typeof(Result<Dictionary<string, int>>), description: "结果")]
+        [SwaggerOperation(
+            Summary = "TestGet",
+            Description = @"获取测试数据"
+        )]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeacherVO>>), description: "结果")]
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
-        public async Task<IActionResult> TestGet()
+        public async Task<IActionResult> TestGet(int page, int pageSize)
         {
-            var data =  await _SQLServerInit.Users.ToListAsync();
+            List<TeacherVO> rs = (List<TeacherVO>)await SqlServer.QueryAsync<TeacherVO>(SQLString.GetTeachers(page, pageSize));
             return new JsonResult(new Result<object>()
             {
                 Code = (int)Result<object>.CM.SUCCESS_200,
                 Message = "Success",
-                Data = data
+                Data = rs
             });
         }
 
-        [HttpGet("TestDoSql")]
-        [SwaggerOperation(Summary = "TestDoSql", Description = "TestDoSql")]
+        public class TestPostDTO {
+            public required int Id { get; set; }
+            public required string Name { get; set; }
+        }
+
+        [HttpPost("TestPost")]
+        [SwaggerOperation(
+            Summary = "TestPost",
+            Description = @"发送测试数据"
+        )]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<TestPostDTO>), description: "结果")]
+        [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
+        public async Task<IActionResult> TestPost(TestPostDTO o)
+        {
+            Console.WriteLine(o.ToString());
+            return new JsonResult(new Result<object>()
+            {
+                Code = (int)Result<object>.CM.SUCCESS_200,
+                Message = "Success",
+                Data = o
+            });
+        }
+
+        [HttpGet("GetUserByID")]
+        [SwaggerOperation(Summary = "GetUserByID", Description = "GetUserByID")]
         [SwaggerResponse(statusCode: 200, type: typeof(Result<List<User>>), description: "结果")]
         [SwaggerResponse(statusCode: 404, type: typeof(Result<object>), description: "Data not found")]
         [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
-        public async Task<IActionResult> TestDoSql(long id)
+        public async Task<IActionResult> GetUserByID(long id)
         {
             if (id < 0) {
                 return new JsonResult(new Result<object>()

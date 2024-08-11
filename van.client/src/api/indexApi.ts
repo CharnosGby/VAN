@@ -1,19 +1,24 @@
 import axios from 'axios'
-export const TestGet = async () => {
-    const res = await axios.get('http://localhost:8081/Test/TestGet', { withCredentials: true })
+const BASEURL = 'http://localhost:8081'
+export interface ITestGet {
+    page:number,
+    pageSize:number
+}
+export const TestGet = async (param: ITestGet) => {
+    const res = await axios.get(`${BASEURL}/Test/TestGet`, { params: param, withCredentials: true })
     return res
 }
 
-interface ITest {
+export interface ITestPost {
     id: number,
     name: string,
 }
-export const TestPost = async (param: ITest) => {
-    const res = await axios.post('http://localhost:8081/Test/TestPost', param, { withCredentials: true })
+export const TestPost = async (param: ITestPost) => {
+    const res = await axios.post(`${BASEURL}/Test/TestPost`, param, { withCredentials: true })
     return res
 }
 
 export const TestGetUsers = async () => {
-    const res = await axios.get('http://localhost:8081/api/User/GetUsers', { withCredentials: true })
+    const res = await axios.get(`${BASEURL}/api/User/GetUsers`, { withCredentials: true })
     return res
 }

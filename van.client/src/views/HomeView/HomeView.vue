@@ -15,9 +15,19 @@
           <template #header>
             <div>结果</div>
           </template>
-          <p v-for="item in list" :key="item.key">
-            {{ `${item.key}:${item.value}` }}
-          </p>
+          <el-card v-for="(item, index) in list" :key="index">
+            <template #header>
+              <div>教师姓名:{{ item.tname }}</div>
+            </template>
+            <div>教师性别:{{ item.sex }}</div>
+            <div>教师工号:{{ item.tno }}</div>
+            <div>教师电话:{{ item.tphone }}</div>
+            <div>所属学院:{{ item.cname }}</div>
+            <div>所属学院编号:{{ item.ccode }}</div>
+            <div>所属学校:{{ item.sname }}</div>
+            <div>所属学校编号:{{ item.scode }}</div>
+            <div>所属学校等级:{{ item.slevel }}</div>
+          </el-card>
         </el-card>
       </template>
     </el-card>
@@ -29,29 +39,28 @@ import { Search } from '@element-plus/icons-vue';
 import { ref } from 'vue';
 import * as API from '@/api/indexApi';
 interface TransformedData {
-  key: string;
-  value: string;
+  tname: string;
+  sex: string;
+  tno: string;
+  tphone: string;
+  cname: string;
+  ccode: string;
+  sname: string;
+  scode: string;
+  slevel: string;
 }
-const list = ref<TransformedData[]>([
-  { key: 'a', value: 'b' },
-  { key: 'c', value: 'd' },
-]);
+const list = ref<TransformedData[]>([]);
 const get = async () => {
-  const res = await API.TestGet();
-  const res2 = await API.TestGetUsers();
-  return { res, res2 };
+  var param = <API.ITestGet>{
+    page: 1,
+    pageSize: 10,
+  };
+  const res = await API.TestGet(param);
+  return { res };
 };
 const init = async () => {
-  get().then(({ res, res2 }) => {
+  get().then(({ res }) => {
     list.value = res.data.data as TransformedData[];
-    const res2_data = res2.data as {
-      id: number;
-      name: string;
-      password: string;
-    }[];
-    res2_data.forEach(({ id, name, password }) => {
-      list.value.push({ key: name, value: password });
-    });
   });
 };
 </script>
