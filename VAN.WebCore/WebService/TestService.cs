@@ -14,7 +14,7 @@ namespace VAN.WebCore.WebService
         Task<List<Score>> GetAllScores(SQLServerInit serverInit);
 
         Task<List<ScoreVO>> GetScoreBySno(MyUtils.SQLUtil SqlServer, string sno);
-        Task<List<TeacherVO>> GetTeachers(MyUtils.SQLUtil SqlServer, int page,int pageSize);
+        Task<List<TeachersVO>> GetTeachers(MyUtils.SQLUtil SqlServer, int page,int pageSize);
 
     }
 }

@@ -13,7 +13,7 @@ namespace VAN.SQLServerCore.SQLServer.Models
         public required int Sex { get; set; }
         public required string Tno { get; set; }
         public required string TPhone { get; set; }
-        public required int BeCollegeId { get; set; }
+        public required int BeCollegeCode { get; set; }
         public required int Uid { get; set; }
         public required int Del { get; set; }
     }

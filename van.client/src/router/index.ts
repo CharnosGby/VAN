@@ -22,8 +22,8 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import('@/views/Personal/personalScores.vue')
                     },
                     {
-                        path: 'personalOrderTo',
-                        component: () => import('@/views/Personal/personalOrderTo.vue')
+                        path: 'personalVolunteer',
+                        component: () => import('@/views/Personal/personalVolunteer.vue')
                     },
                     {
                         path: 'personalResult',

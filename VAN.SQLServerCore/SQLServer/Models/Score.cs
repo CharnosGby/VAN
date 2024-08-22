@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VAN.SQLServerCore.SQLServer.Models
 {
@@ -11,14 +6,14 @@ namespace VAN.SQLServerCore.SQLServer.Models
     {
         [Key]
         public required int ScoreId { get; set; }
-        public required int StudentId { get; set; }
-        public required int DisciplineId { get; set; }
+        public required int StudentSno { get; set; }
+        public required int DisciplineCode { get; set; }
         public required double Scores { get; set; }
         public required int Del { get; set; }
 
         public override string? ToString()
         {
-            return $"ScoreId: {ScoreId}, StudentId: {StudentId}, DisciplineId: {DisciplineId}, Scores: {Scores}, Del: {Del}";
+            return $"ScoreId: {ScoreId}, StudentSno: {StudentSno}, DisciplineCode: {DisciplineCode}, Scores: {Scores}, Del: {Del}";
         }
     }
 }

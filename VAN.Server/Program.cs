@@ -13,6 +13,7 @@ using VAN.WebCore.WebService.WebServiceImpl;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();  // ×¢²á SignalR ·þÎñ
 
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
    .AddNegotiate();
@@ -68,6 +69,10 @@ if (app.Environment.IsDevelopment())
 {
     new SwaggerInit().UseSwaggerExt(app);
 }
+
+# region Ó³Éä SignalR Hub
+app.MapHub<MessageChatHubInit>("/MessageChatHubURL");
+# endregion
 
 app.UseHttpsRedirection();
 

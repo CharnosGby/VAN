@@ -17,6 +17,13 @@ html,body,#app{
   height: 100%;
   width: 100%;
 }
+#app {
+  width: 100%; /* 设置div的宽度 */
+  height: 100vh; /* 设置div的高度，或者使用其他具体数值 */
+  background: url("http://localhost:8082/public/images/bg1.jpg") no-repeat; /* 设置背景图片，并不重复 */
+  background-size: cover; /* 让图片覆盖整个div，保持宽高比，可能会裁剪图片 */
+  background-position: center 60px; /* 水平居中，垂直方向从顶部向下偏移20px */
+}
 
 /* 去除列表默认样式 */
 ul,

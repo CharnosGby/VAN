@@ -33,16 +33,41 @@ namespace VAN.Server.Controllers
             _testService = testService;
         }
 
+        [HttpGet("TestLogin")]
+        [SwaggerOperation(
+            Summary = "TestLogin",
+            Description = @"登录测试"
+        )]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeachersVO>>), description: "结果")]
+        [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
+        public async Task<IActionResult> TestLogin(string username,string password)
+        {
+            IDictionary<string, object> UserData = new Dictionary<string, object>
+            {
+                ["Username"] = username,
+                ["Password"] = password
+            };
+            string token = MyUtils.JwtUtil.CreateJwtToken(UserData, DateTime.Now.AddDays(7));
+            Console.WriteLine(MyUtils.JwtUtil.ValidateJwtToken(token)["Username"]);
+            Console.WriteLine(MyUtils.JwtUtil.ValidateJwtToken(token)["Password"]);
+            return new JsonResult(new Result<object>()
+            {
+                Code = (int)Result<object>.CM.SUCCESS_200,
+                Message = "Success",
+                Data = token
+            });
+        }
+
         [HttpGet("TestGet")]
         [SwaggerOperation(
             Summary = "TestGet",
             Description = @"获取测试数据"
         )]
-        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeacherVO>>), description: "结果")]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeachersVO>>), description: "结果")]
         [SwaggerResponse(statusCode: 500, type: typeof(string), description: "Internal server error.")]
         public async Task<IActionResult> TestGet(int page, int pageSize)
         {
-            List<TeacherVO> rs = (List<TeacherVO>)await SqlServer.QueryAsync<TeacherVO>(SQLString.GetTeachers(page, pageSize));
+            List<TeachersVO> rs = (List<TeachersVO>)await SqlServer.QueryAsync<TeachersVO>(SQLString.GetTeachers(page, pageSize));
             return new JsonResult(new Result<object>()
             {
                 Code = (int)Result<object>.CM.SUCCESS_200,
@@ -166,12 +191,12 @@ namespace VAN.Server.Controllers
 
         [HttpGet("GetTeachers")]
         [SwaggerOperation(Summary = "GetTeachers", Description = "GetTeachers")]
-        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeacherVO>>), description: "结果")]
+        [SwaggerResponse(statusCode: 200, type: typeof(Result<List<TeachersVO>>), description: "结果")]
         [SwaggerResponse(statusCode: 404, type: typeof(Result<object>), description: "Data not found")]
         [SwaggerResponse(statusCode: 500, type: typeof(Result<object>), description: "Internal server error.")]
         public async Task<IActionResult> GetTeachers(int page,int pageSize)
         {
-            List<TeacherVO> data = await _testService.GetTeachers(SqlServer, page, pageSize);
+            List<TeachersVO> data = await _testService.GetTeachers(SqlServer, page, pageSize);
             if (data.IsNullOrEmpty())
             {
                 return new JsonResult(new Result<object>()
@@ -184,7 +209,7 @@ namespace VAN.Server.Controllers
             else
             {
                 Console.WriteLine(data[0].ToString());
-                return new JsonResult(new Result<List<TeacherVO>>()
+                return new JsonResult(new Result<List<TeachersVO>>()
                 {
                     Code = (int)Result<object>.CM.SUCCESS_200,
                     Message = "Success",

@@ -16,8 +16,8 @@ namespace VAN.WebCore.WebService.WebServiceImpl
                 .Select(s => new Score
                 {
                     ScoreId = s.ScoreId,
-                    StudentId = s.StudentId,
-                    DisciplineId = s.DisciplineId,
+                    StudentSno = s.StudentSno,
+                    DisciplineCode = s.DisciplineCode,
                     Scores = s.Scores,
                     Del = s.Del
                 })
@@ -37,9 +37,9 @@ namespace VAN.WebCore.WebService.WebServiceImpl
             return rs;
         }
 
-        public async Task<List<TeacherVO>> GetTeachers(MyUtils.SQLUtil SqlServer, int page, int pageSize)
+        public async Task<List<TeachersVO>> GetTeachers(MyUtils.SQLUtil SqlServer, int page, int pageSize)
         {
-            List<TeacherVO> rs = (List<TeacherVO>)await SqlServer.QueryAsync<TeacherVO>(SQLString.GetTeachers(page,pageSize));
+            List<TeachersVO> rs = (List<TeachersVO>)await SqlServer.QueryAsync<TeachersVO>(SQLString.GetTeachers(page,pageSize));
             return rs;
         }
     }
